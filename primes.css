@@ -4,6 +4,10 @@ body {
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
 	background-image: url("imgs/wood.jpg");
+	-webkit-user-select: none; /* Chrome all / Safari all */
+	-moz-user-select: none; /* Firefox all */
+	-ms-user-select: none; /* IE 10+ */
+	user-select: none; /* Likely future */
 }
 h1 {
 	text-align: center;
@@ -67,6 +71,7 @@ h1 {
 	background-color: white;
 	height: 60px;
 	text-align: center;
+	font-size: 200%;
 }
 button {
 	border: none;
