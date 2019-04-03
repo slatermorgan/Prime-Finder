@@ -91,3 +91,6 @@ button:hover {
 #container {
 	margin-top: 30px;
 }
+#header {
+	font-size: 500%;
+}
