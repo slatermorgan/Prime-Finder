@@ -3,23 +3,27 @@ var circles = document.querySelectorAll(".circle");
 var messageDisp = document.querySelector("#header");
 var numPrimesDisp = document.querySelector("#numPrimesDisp");
 var resetBtn = document.querySelector("#resetBtn");
-var numShown = document.querySelectorAll(".shown");
 
-// main problem is that primes need to be removed from the num array after being clicked
+var nonPrimes = 0;
+var score = 0;
 
 setup();
 nonPrimeCounter();
 
 // adds reset button function
 resetBtn.addEventListener("click", function() {
+	nonPrimes = 0;
+	score = 0;
 	setup();
 	nonPrimeCounter();
+	messageDisp.textContent = "Prime Finder";
 });
 
 function gameOver() {
 	for (var i = 0; i < circles.length; i++) {
 		circles[i].classList.add("hidden");
 	}
+	messageDisp.textContent = "You Lose";
 }
 
 function primeCheck(value) {
@@ -32,17 +36,28 @@ function primeCheck(value) {
 }
 
 function nonPrimeCounter() {
-	numPrimes = 0;
+	nonPrimes = 0;
 	for (i = 0; i < num.length; i++) {
 		if (primeCheck(num[i]) === false) {
-			numPrimes = numPrimes + 1;
+			nonPrimes = nonPrimes + 1;
 		}
 	}
-	numPrimesDisp.textContent = numPrimes;
+	numPrimesDisp.textContent = score + "/" + nonPrimes;
+}
+
+function winCheck() {
+	if (score === nonPrimes) {
+		for (var i = 0; i < circles.length; i++) {
+			circles[i].classList.add("hidden");
+		}
+		messageDisp.textContent = "You Win";
+	}
 }
 
 function setup() {
+	var score = 0;
 	for (var i = 0; i < circles.length; i++) {
+		circles[i].classList.remove("hidden");
 		circles[i].classList.add("shown");
 		// generates random numbers 1-1000
 		num[i] = Math.round(Math.random() * 1000);
@@ -53,14 +68,13 @@ function setup() {
 			// grab number of circle
 			var clickedNum = this.textContent;
 			if (primeCheck(clickedNum) === false) {
-				this.classList.remove("shown");
 				this.classList.add("hidden");
-				// this.textContent = "";
+				score = score + 1;
+				winCheck();
+				numPrimesDisp.textContent = score + "/" + nonPrimes;
 			} else {
 				gameOver();
-				messageDisp.textContent = "You Lose";
 			}
-			nonPrimeCounter();
 		});
 	}
 }
